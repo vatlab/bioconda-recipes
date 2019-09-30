@@ -1,19 +1,25 @@
+{% set version = "1.12.0" %}
+{% set name = "RImmPort" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-rimmport
-  version: 1.4.2
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: RImmPort_1.4.2.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/RImmPort_1.4.2.tar.gz
-    - https://depot.galaxyproject.org/software/RImmPort/RImmPort_1.4.2_src_all.tar.gz
-  md5: 26cb626afa74b29ca5219e078b1ce8f2
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 74e9aacd1917e4ea6b968bd30371db56
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: knitr
 requirements:
-  build:
+  host:
     - r-base
     - r-data.table
     - r-dbi
@@ -33,10 +39,17 @@ requirements:
     - r-sqldf
 test:
   commands:
-    - '$R -e "library(''RImmPort'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/RImmPort.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-3
-  summary: 'The RImmPort package simplifies access to ImmPort data for analysis in
-    the R environment. It provides a standards-based interface to the ImmPort study
-    data that is in a proprietary format.'
+  summary: 'The RImmPort package simplifies access to ImmPort data for analysis in the R environment. It provides a standards-based interface to the ImmPort study data that is in a proprietary format.'
+extra:
+  identifiers:
+    - biotools:rimmport
+    - doi:10.1093/bioinformatics/btw719
+  parent_recipe:
+    name: bioconductor-rimmport
+    path: recipes/bioconductor-rimmport
+    version: 1.8.0
+

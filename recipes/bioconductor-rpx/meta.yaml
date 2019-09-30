@@ -1,19 +1,25 @@
+{% set version = "1.20.0" %}
+{% set name = "rpx" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-rpx
-  version: 1.12.1
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: rpx_1.12.1.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/rpx_1.12.1.tar.gz
-    - https://depot.galaxyproject.org/software/rpx/rpx_1.12.1_src_all.tar.gz
-  md5: 4174cd01da022a04523e8745204f28a3
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name }}/bioconductor-{{ name }}_{{ version }}_src_all.tar.gz'
+  md5: 97d1e71c49b3cd2afeea2dd82b6cdfb8
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: MSnbase, Biostrings, BiocStyle, testthat, knitr
 requirements:
-  build:
+  host:
     - r-base
     - r-rcurl
     - r-xml2
@@ -23,9 +29,17 @@ requirements:
     - r-xml2
 test:
   commands:
-    - '$R -e "library(''rpx'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/rpx.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-2
-  summary: 'This package implements an interface to proteomics data submitted to the
-    ProteomeXchange consortium.'
+  summary: 'The rpx package implements an interface to proteomics data submitted to the ProteomeXchange consortium.'
+extra:
+  identifiers:
+    - biotools:rpx
+    - doi:10.1038/nbt.2839
+  parent_recipe:
+    name: bioconductor-rpx
+    path: recipes/bioconductor-rpx
+    version: 1.16.0
+

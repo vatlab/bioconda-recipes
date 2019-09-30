@@ -1,20 +1,25 @@
+{% set version = "1.20.0" %}
+{% set name = "Mirsynergy" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-mirsynergy
-  version: 1.12.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: Mirsynergy_1.12.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/Mirsynergy_1.12.0.tar.gz
-    - https://bioarchive.galaxyproject.org/Mirsynergy_1.12.0.tar.gz
-    - https://depot.galaxyproject.org/software/Mirsynergy/Mirsynergy_1.12.0_src_all.tar.gz
-  md5: 14f46bc5e653d284295e7baa11857791
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 3acbca5e8024960a4a5cf8d2c85c656b
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: glmnet, RUnit, BiocGenerics, knitr
 requirements:
-  build:
+  host:
     - r-base
     - r-ggplot2
     - r-gridextra
@@ -34,9 +39,16 @@ requirements:
     - r-scales
 test:
   commands:
-    - '$R -e "library(''Mirsynergy'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/Mirsynergy.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-2
-  summary: 'Detect synergistic miRNA regulatory modules by overlapping neighbourhood
-    expansion.'
+  summary: 'Detect synergistic miRNA regulatory modules by overlapping neighbourhood expansion.'
+extra:
+  identifiers:
+    - biotools:mirsynergy
+  parent_recipe:
+    name: bioconductor-mirsynergy
+    path: recipes/bioconductor-mirsynergy
+    version: 1.16.0
+

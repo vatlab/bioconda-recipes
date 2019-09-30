@@ -1,25 +1,31 @@
+{% set version = "0.3.17" %}
+
 package:
   name: pybigwig
-  version: '0.3.5'
+  version: {{ version }}
 
 source:
-  fn: pyBigWig-0.3.5.tar.gz
-  sha256: 12f06b03ff86dc37bf13b1e06f8dc742b005415b0918bd2d4e85d5c35dd8f8c7
-  url: https://pypi.python.org/packages/02/15/fe19d36626ea7965dd1800db4d7ed20c91940fb8604683a85014495b5bf1/pyBigWig-0.3.5.tar.gz
+  url: https://files.pythonhosted.org/packages/b0/e2/cf945d541a10bb9c675f986d5bf0b0268544721054d17cc6260cfcfb3685/pyBigWig-0.3.17.tar.gz
+  sha256: 41f64f802689ed72e15296a21a4b7abd3904780b2e4f8146fd29098fc836fd94
 
 build:
   number: 0
-  skip: False
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
     - curl
-    - numpy x.x
+    - libcurl
+    - zlib
+    - numpy >=1.10.*
   run:
     - python
-    - curl
-    - numpy x.x
+    - libcurl
+    - zlib
+    - {{ pin_compatible('numpy') }}
+
 test:
   imports:
     - pyBigWig

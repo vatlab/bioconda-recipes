@@ -1,29 +1,43 @@
+{% set version = "1.22.0" %}
+{% set name = "curatedOvarianData" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-curatedovariandata
-  version: 1.14.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: curatedOvarianData_1.14.0.tar.gz
-  url: http://bioconductor.org/packages/release/data/experiment/src/contrib/curatedOvarianData_1.14.0.tar.gz
-  md5: 5338384dfe2f75c93ddffd68eae7e3e6
+  url:
+    - 'https://bioconductor.org/packages/{{ bioc }}/data/experiment/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 1af5517292618a6a05871dbf02953866
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: survival, RUnit, metafor, genefilter, logging, sva, xtable, futile.logger, BiocStyle
 requirements:
-  build:
-    - bioconductor-affy
-    - bioconductor-biocgenerics
+  host:
+    - 'bioconductor-affy >=1.62.0,<1.63.0'
+    - 'bioconductor-biocgenerics >=0.30.0,<0.31.0'
     - r-base
   run:
-    - bioconductor-affy
-    - bioconductor-biocgenerics
+    - 'bioconductor-affy >=1.62.0,<1.63.0'
+    - 'bioconductor-biocgenerics >=0.30.0,<0.31.0'
     - r-base
+    - curl
 test:
   commands:
-    - '$R -e "library(''curatedOvarianData'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/release/data/experiment/html/curatedOvarianData.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/data/experiment/html/{{ name }}.html'
   license: Artistic-2.0
-  summary: 'The curatedOvarianData package provides data for gene expression analysis
-    in patients with ovarian cancer.'
+  summary: 'The curatedOvarianData package provides data for gene expression analysis in patients with ovarian cancer.'
+extra:
+  parent_recipe:
+    name: bioconductor-curatedovariandata
+    path: recipes/bioconductor-curatedovariandata
+    version: 1.18.0
+

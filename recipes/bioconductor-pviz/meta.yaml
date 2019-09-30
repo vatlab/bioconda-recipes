@@ -1,39 +1,53 @@
+{% set version = "1.18.0" %}
+{% set name = "Pviz" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-pviz
-  version: 1.10.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: Pviz_1.10.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/Pviz_1.10.0.tar.gz
-    - https://bioarchive.galaxyproject.org/Pviz_1.10.0.tar.gz
-    - https://depot.galaxyproject.org/software/Pviz/Pviz_1.10.0_src_all.tar.gz
-  md5: 55a484071ac1974537ab7b70163b8896
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 699bc1eefaddda38bed03d0226c36ddd
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: knitr, pepDat
 requirements:
-  build:
-    - bioconductor-biostrings
-    - bioconductor-biovizbase
-    - bioconductor-genomicranges
-    - 'bioconductor-gviz >=1.7.10'
-    - bioconductor-iranges
+  host:
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
+    - 'bioconductor-biovizbase >=1.32.0,<1.33.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-gviz >=1.28.0,<1.29.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
     - r-base
     - r-data.table
   run:
-    - bioconductor-biostrings
-    - bioconductor-biovizbase
-    - bioconductor-genomicranges
-    - 'bioconductor-gviz >=1.7.10'
-    - bioconductor-iranges
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
+    - 'bioconductor-biovizbase >=1.32.0,<1.33.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-gviz >=1.28.0,<1.29.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
     - r-base
     - r-data.table
 test:
   commands:
-    - '$R -e "library(''Pviz'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/Pviz.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: Artistic-2.0
   summary: 'Pviz adapts the Gviz package for protein sequences and data.'
+extra:
+  identifiers:
+    - biotools:pviz
+    - doi:10.1007/978-1-4939-3037-1_10
+  parent_recipe:
+    name: bioconductor-pviz
+    path: recipes/bioconductor-pviz
+    version: 1.14.0
+

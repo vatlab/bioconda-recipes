@@ -1,30 +1,35 @@
+{% set version = "1.14.0" %}
+{% set name = "SISPA" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-sispa
-  version: 1.6.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: SISPA_1.6.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/SISPA_1.6.0.tar.gz
-    - https://bioarchive.galaxyproject.org/SISPA_1.6.0.tar.gz
-    - https://depot.galaxyproject.org/software/SISPA/SISPA_1.6.0_src_all.tar.gz
-  md5: 8af8654a5736fa2ad073a1ebab30d9ec
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 9055444742c1fce2978063c887f3b2d1
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: knitr
 requirements:
-  build:
-    - bioconductor-genefilter
-    - bioconductor-gsva
+  host:
+    - 'bioconductor-genefilter >=1.66.0,<1.67.0'
+    - 'bioconductor-gsva >=1.32.0,<1.33.0'
     - r-base
     - r-changepoint
     - r-data.table
     - r-ggplot2
     - r-plyr
   run:
-    - bioconductor-genefilter
-    - bioconductor-gsva
+    - 'bioconductor-genefilter >=1.66.0,<1.67.0'
+    - 'bioconductor-gsva >=1.32.0,<1.33.0'
     - r-base
     - r-changepoint
     - r-data.table
@@ -32,9 +37,17 @@ requirements:
     - r-plyr
 test:
   commands:
-    - '$R -e "library(''SISPA'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/SISPA.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-2
-  summary: 'Sample Integrated Set Profile Analysis (SISPA) is a method designed to
-    define sample groups with similar gene set enrichment profiles.'
+  summary: 'Sample Integrated Set Profile Analysis (SISPA) is a method designed to define sample groups with similar gene set enrichment profiles.'
+extra:
+  identifiers:
+    - biotools:sispa
+    - doi:10.1093/nar/gkv1503
+  parent_recipe:
+    name: bioconductor-sispa
+    path: recipes/bioconductor-sispa
+    version: 1.10.0
+

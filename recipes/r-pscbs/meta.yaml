@@ -1,57 +1,59 @@
-{% set version="0.63.0" %}
+{% set version = '0.65.0' %}
+
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+
 package:
   name: r-pscbs
-  version: {{ version }}
+  version: {{ version|replace("-", "_") }}
 
 source:
-  fn: PSCBS_{{ version }}.tar.gz
-  url: https://github.com/HenrikBengtsson/PSCBS/archive/287c77c.tar.gz
-  sha256: 8bcb07a1940cda94cbecdf8c5c177304451e694aec49eba451631757f1506271
+  url:
+    - {{ cran_mirror }}/src/contrib/PSCBS_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/PSCBS/PSCBS_{{ version }}.tar.gz
+  sha256: 3365065d5375c599eb024bfff12c5f6b10a6b1a4fe4ba6f200f7e83618dd399a
 
 build:
-  number: 0
-
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - r-base
-    - bioconductor-aroma.light
-    - bioconductor-dnacopy
-    - r-r.cache >=0.12.0
-    - r-r.methodss3 >=1.7.1
-    - r-r.oo >=1.21.0
-    - r-r.utils >=2.5.0
-    - r-future >=1.5.0
-    - r-listenv >=0.6.0
-    - r-matrixstats >=0.52.2
 
+  host:
+    - r-base
+    - bioconductor-dnacopy
+    - r-r.cache >=0.13.0
+    - r-r.methodss3 >=1.7.1
+    - r-r.oo >=1.22.0
+    - r-r.utils >=2.8.0
+    - bioconductor-aroma.light
+    - r-future >=1.12.0
+    - r-listenv >=0.7.0
+    - r-matrixstats >=0.54.0
   run:
     - r-base
-    - bioconductor-aroma.light
     - bioconductor-dnacopy
-    - r-r.cache >=0.12.0
+    - r-r.cache >=0.13.0
     - r-r.methodss3 >=1.7.1
-    - r-r.oo >=1.21.0
-    - r-r.utils >=2.5.0
-    - r-future >=1.5.0
-    - r-listenv >=0.6.0
-    - r-matrixstats >=0.52.2
+    - r-r.oo >=1.22.0
+    - r-r.utils >=2.8.0
+    - bioconductor-aroma.light
+    - r-future >=1.12.0
+    - r-listenv >=0.7.0
+    - r-matrixstats >=0.54.0
 
 test:
   commands:
-    # You can put additional test commands to be run here.
-    - $R -e "library('PSCBS')" # [not win]
-    - "\"%R%\" -e \"library('PSCBS')\"" # [win]
+    - $R -e "library('PSCBS')"           # [not win]
+    - "\"%R%\" -e \"library('PSCBS')\""  # [win]
 
 about:
-  home: 'https://github.com/HenrikBengtsson/PSCBS'
-
+  home: https://github.com/HenrikBengtsson/PSCBS
   license: GPL (>= 2)
-  summary: |
-    Segmentation of allele-specific DNA copy number data and detection
-    of regions with abnormal copy number within each parental chromosome.  Both tumor-normal
-    paired and tumor-only analyses are supported.
-
+  summary: Segmentation of allele-specific DNA copy number data and detection of regions with
+    abnormal copy number within each parental chromosome.  Both tumor-normal paired
+    and tumor-only analyses are supported.
+  license_family: GPL3

@@ -1,28 +1,40 @@
+{% set version = "1.54.0" %}
+{% set name = "MantelCorr" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-mantelcorr
-  version: 1.46.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: MantelCorr_1.46.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/MantelCorr_1.46.0.tar.gz
-    - https://bioarchive.galaxyproject.org/MantelCorr_1.46.0.tar.gz
-    - https://depot.galaxyproject.org/software/MantelCorr/MantelCorr_1.46.0_src_all.tar.gz
-  md5: 4d422d6b713bbb38bdee222c0c66a307
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: dd59c2cb7112102a25e153f10432ea6e
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
 requirements:
-  build:
+  host:
     - r-base
   run:
     - r-base
 test:
   commands:
-    - '$R -e "library(''MantelCorr'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/MantelCorr.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: 'GPL (>= 2)'
-  summary: 'Computes Mantel cluster correlations from a (p x n) numeric data matrix
-    (e.g. microarray gene-expression data).'
+  summary: 'Computes Mantel cluster correlations from a (p x n) numeric data matrix (e.g. microarray gene-expression data).'
+extra:
+  identifiers:
+    - biotools:mantelcorr
+    - doi:10.1038/nmeth.3252
+  parent_recipe:
+    name: bioconductor-mantelcorr
+    path: recipes/bioconductor-mantelcorr
+    version: 1.50.0
+

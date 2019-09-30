@@ -1,35 +1,48 @@
+{% set version = "1.22.0" %}
+{% set name = "BEAT" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-beat
-  version: 1.14.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: BEAT_1.14.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/BEAT_1.14.0.tar.gz
-    - https://bioarchive.galaxyproject.org/BEAT_1.14.0.tar.gz
-    - https://depot.galaxyproject.org/software/BEAT/BEAT_1.14.0_src_all.tar.gz
-  md5: 4b5c1d10035152be5c2921602d8392b9
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 5ca0f1e34e04fd2c3293960760fd7b80
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
 requirements:
-  build:
-    - bioconductor-biostrings
-    - bioconductor-bsgenome
-    - bioconductor-genomicranges
-    - bioconductor-shortread
+  host:
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
+    - 'bioconductor-bsgenome >=1.52.0,<1.53.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-shortread >=1.42.0,<1.43.0'
     - r-base
   run:
-    - bioconductor-biostrings
-    - bioconductor-bsgenome
-    - bioconductor-genomicranges
-    - bioconductor-shortread
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
+    - 'bioconductor-bsgenome >=1.52.0,<1.53.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-shortread >=1.42.0,<1.43.0'
     - r-base
 test:
   commands:
-    - '$R -e "library(''BEAT'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/BEAT.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: 'LGPL (>= 3.0)'
   summary: 'Model-based analysis of single-cell methylation data'
+extra:
+  identifiers:
+    - biotools:beat
+    - doi:10.1038/nmeth.3252
+  parent_recipe:
+    name: bioconductor-beat
+    path: recipes/bioconductor-beat
+    version: 1.18.0
+

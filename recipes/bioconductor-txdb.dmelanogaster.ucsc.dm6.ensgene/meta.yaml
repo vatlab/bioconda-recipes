@@ -1,32 +1,42 @@
+{% set version = "3.4.6" %}
+{% set name = "TxDb.Dmelanogaster.UCSC.dm6.ensGene" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-txdb.dmelanogaster.ucsc.dm6.ensgene
-  version: 3.3.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: TxDb.Dmelanogaster.UCSC.dm6.ensGene_3.3.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.4/data/annotation/src/contrib/TxDb.Dmelanogaster.UCSC.dm6.ensGene_3.3.0.tar.gz
-    - https://depot.galaxyproject.org/software/TxDb.Dmelanogaster.UCSC.dm6.ensGene/TxDb.Dmelanogaster.UCSC.dm6.ensGene_3.3.0_src_all.tar.gz
-  sha256: fca3e415acf022ebab7643296467380bd19dc0cac27d7c752df89ff18759fccd
+    - 'https://bioconductor.org/packages/{{ bioc }}/data/annotation/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 3f44aee6ed70de5594d80262674c0e15
 build:
-  number: 2
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
 requirements:
-  build:
-    - bioconductor-annotationdbi
-    - 'bioconductor-genomicfeatures >=1.23.28'
+  host:
+    - 'bioconductor-annotationdbi >=1.46.0,<1.47.0'
+    - 'bioconductor-genomicfeatures >=1.36.0,<1.37.0'
     - r-base
   run:
-    - bioconductor-annotationdbi
-    - 'bioconductor-genomicfeatures >=1.23.28'
+    - 'bioconductor-annotationdbi >=1.46.0,<1.47.0'
+    - 'bioconductor-genomicfeatures >=1.36.0,<1.37.0'
     - r-base
-    - wget
+    - curl
 test:
   commands:
-    - '$R -e "library(''TxDb.Dmelanogaster.UCSC.dm6.ensGene'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.4/data/annotation/html/TxDb.Dmelanogaster.UCSC.dm6.ensGene.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/data/annotation/html/{{ name }}.html'
   license: Artistic-2.0
-  summary: 'Exposes an annotation databases generated from UCSC by exposing these
-    as TxDb objects'
+  summary: 'Exposes an annotation databases generated from UCSC by exposing these as TxDb objects'
+extra:
+  parent_recipe:
+    name: bioconductor-txdb.dmelanogaster.ucsc.dm6.ensgene
+    path: recipes/bioconductor-txdb.dmelanogaster.ucsc.dm6.ensgene
+    version: 3.4.1
+

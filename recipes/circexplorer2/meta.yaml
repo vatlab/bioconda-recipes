@@ -1,13 +1,13 @@
 package:
   name: circexplorer2
-  version: "2.3.1"
+  version: "2.3.8"
 
 source:
-  fn: CIRCexplorer2-2.3.1.tar.gz
-  url: https://pypi.python.org/packages/91/97/37698fec559743e51a4bbcd7028eaa0eba982ecd2ad7917ab72a62ecd73e/CIRCexplorer2-2.3.1.tar.gz
-  md5: 16958567416ba8b718483d1c3194d70f
+  url: https://files.pythonhosted.org/packages/57/04/c9586b07c96b6f4a8b07871a27f3f1bb06510c50c211f97837f41fbc088a/CIRCexplorer2-2.3.8.tar.gz
+  sha256: 8261ee884f6d895131ce681d5eda6554376e973851a9de4dc50e2b3e242ccc80
 
 build:
+  noarch: python
   entry_points:
     - CIRCexplorer2=circ2.command_parse:main
     - fetch_ucsc.py=circ2.fetch_ucsc:main
@@ -15,7 +15,7 @@ build:
   number: 0
 
 requirements:
-  build:
+  host:
     - python
     - requests
     - pysam >=0.8.4

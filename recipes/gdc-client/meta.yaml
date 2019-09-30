@@ -1,0 +1,45 @@
+{% set version = "1.4.0" %}
+
+package:
+  name: gdc-client
+  version: {{ version }}
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv
+
+source:
+  url: https://github.com/NCI-GDC/gdc-client/archive/{{ version }}.tar.gz
+  sha256: 3ae6664f9666c75ffbf3c883409cfa51333f61d23b7aa99010925a084b4c9582
+
+requirements:
+  host:
+    - python <3
+    - parcel >=0.2,<1
+    - lxml >=3,<4
+    - pyyaml >=3,<4
+    - jsonschema >=2,<3
+    - pyopenssl >=17,<18
+    - ndg-httpsclient >=0.4,<1
+    - pyasn1 >=0.2,<1
+    - zlib
+  run:
+    - python <3
+    - parcel >=0.2,<1
+    - lxml >=3,<4
+    - pyyaml >=3,<4
+    - jsonschema >=2,<3
+    - pyopenssl >=17,<18
+    - ndg-httpsclient >=0.4,<1
+    - pyasn1 >=0.2,<1
+    - zlib
+
+test:
+  commands:
+    - gdc-client --help
+
+about:
+  home: https://gdc.cancer.gov/access-data/gdc-data-transfer-tool
+  license: Apache v2
+  summary: GDC Data Transfer Tool

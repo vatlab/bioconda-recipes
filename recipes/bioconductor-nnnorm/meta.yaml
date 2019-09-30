@@ -1,33 +1,44 @@
+{% set version = "2.48.0" %}
+{% set name = "nnNorm" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-nnnorm
-  version: 2.40.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: nnNorm_2.40.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/nnNorm_2.40.0.tar.gz
-    - https://bioarchive.galaxyproject.org/nnNorm_2.40.0.tar.gz
-    - https://depot.galaxyproject.org/software/nnNorm/nnNorm_2.40.0_src_all.tar.gz
-  md5: e5d78c1120e7cd09a530637c89811eb8
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: a1dd8fef52c92c47e1bc17ca0fe5c823
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
 requirements:
-  build:
-    - bioconductor-marray
+  host:
+    - 'bioconductor-marray >=1.62.0,<1.63.0'
     - r-base
     - r-nnet
   run:
-    - bioconductor-marray
+    - 'bioconductor-marray >=1.62.0,<1.63.0'
     - r-base
     - r-nnet
 test:
   commands:
-    - '$R -e "library(''nnNorm'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/nnNorm.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: LGPL
-  summary: 'This package allows to detect and correct for spatial and intensity biases
-    with two-channel microarray data. The normalization method implemented in this
-    package is based on robust neural networks fitting.'
+  summary: 'This package allows to detect and correct for spatial and intensity biases with two-channel microarray data. The normalization method implemented in this package is based on robust neural networks fitting.'
+extra:
+  identifiers:
+    - biotools:nnnorm
+    - doi:10.1093/bioinformatics/bti397
+  parent_recipe:
+    name: bioconductor-nnnorm
+    path: recipes/bioconductor-nnnorm
+    version: 2.44.0
+

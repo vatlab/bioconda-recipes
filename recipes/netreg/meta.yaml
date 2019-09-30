@@ -1,38 +1,43 @@
-about:
-  home: https://github.com/dirmeier/netReg
-  license: GPL3
-  summary: "netReg fits linear regression models using network-penalization."
+{% set name = "netreg" %}
+{% set version = "1.8.0" %}
+{% set sha256 = "9b300296384786867a5442d97dfe853a19d2457bd1f7b05c2303249f42ce018c" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  sha256: {{ sha256 }}
+  url: https://github.com/dirmeier/netReg/archive/v{{ version }}.tar.gz
 
 build:
   number: 0
 
-package:
-  name: netreg
-  version: '1.0.0'
-
 requirements:
   build:
-    - gcc # [linux]
-    - llvm # [osx]
-    - libcxx # [osx]
-    - cmake >=3.8
-    - boost ==1.63.0
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+  host:
+    - boost-cpp
     - armadillo >=7.800.1
     - openblas >=0.2.19
     - zlib
+    - hdf5
   run:
-    - libgcc # [linux]
-    - libcxx # [osx]
-    - boost ==1.63.0
+    - boost-cpp
     - armadillo >=7.800.1
     - openblas >=0.2.19
     - zlib
-
-source:
-  fn: netreg-1.0.0.tar.gz
-  sha256: 72d5cfcfd291ff6bd7f31782b3fab0077e93cd242fc102e6a22f68f7d364c349
-  url: https://github.com/dirmeier/netReg/archive/v1.0.0.tar.gz
+    - hdf5
 
 test:
-   commands:
-     - netReg -h
+  commands:
+    - netReg -h
+
+about:
+  home: https://github.com/dirmeier/netReg
+  license: GPL3
+  summary: "netReg fits linear regression models using network-penalization."
+  license_file: LICENSE
+  doc_url: https://dirmeier.github.io/netReg/

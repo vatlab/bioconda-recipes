@@ -1,32 +1,45 @@
+{% set version = "1.18.0" %}
+{% set name = "PSEA" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-psea
-  version: 1.10.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: PSEA_1.10.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/PSEA_1.10.0.tar.gz
-    - https://bioarchive.galaxyproject.org/PSEA_1.10.0.tar.gz
-    - https://depot.galaxyproject.org/software/PSEA/PSEA_1.10.0_src_all.tar.gz
-  md5: 544a65f736601f4acdb44e409639fc2b
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: c33029fffd8410028cf1e4cf81a2259d
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: BiocStyle
 requirements:
-  build:
-    - bioconductor-biobase
+  host:
+    - 'bioconductor-biobase >=2.44.0,<2.45.0'
     - r-base
     - r-mass
   run:
-    - bioconductor-biobase
+    - 'bioconductor-biobase >=2.44.0,<2.45.0'
     - r-base
     - r-mass
 test:
   commands:
-    - '$R -e "library(''PSEA'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/PSEA.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: Artistic-2.0
-  summary: 'Deconvolution of gene expression data by Population-Specific Expression
-    Analysis (PSEA).'
+  summary: 'Deconvolution of gene expression data by Population-Specific Expression Analysis (PSEA).'
+extra:
+  identifiers:
+    - biotools:psea
+    - doi:10.1038/scibx.2011.1159
+  parent_recipe:
+    name: bioconductor-psea
+    path: recipes/bioconductor-psea
+    version: 1.14.0
+

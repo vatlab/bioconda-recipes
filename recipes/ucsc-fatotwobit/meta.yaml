@@ -1,40 +1,44 @@
-package:
-    name: "ucsc-fatotwobit"
-    version: "353"
-source:
-    url: "http://hgdownload.cse.ucsc.edu/admin/exe/userApps.v353.src.tgz"          # [linux]
-    fn: "userApps.src.tgz"                                                                     # [linux]
-    md5: "8335fcbaa7815f368c56e04564fc58e9"                                                    # [linux]
-    patches:                                                                                   # [linux]
-        - "include.patch"                                                                      # [linux]
+{% set package = "ucsc-fatotwobit" %}
+{% set program = "faToTwoBit" %}
+{% set version = "377" %}
+{% set sha256 = "932f149c19641064a9cd3f2382cbb54b45a9292b8444792872d531346925d676" %}
 
-    url: "http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/faToTwoBit"                    # [osx]
-    fn: "faToTwoBit"                                                                            # [osx]
+package:
+  name: "{{ package }}"
+  version: "{{ version }}"
+
+source:
+  url: "http://hgdownload.cse.ucsc.edu/admin/exe/userApps.v{{ version }}.src.tgz"
+  sha256: "{{ sha256 }}"
+  patches:
+    - "include.patch"
+
+build:
+  number: 2
 
 requirements:
-    build:
-        - libpng                                                    # [linux]
-        - mysql-connector-c                                         # [linux]
-        - zlib                                                      # [linux]
-        - openssl                                                   # [linux]
-        - libuuid                                                   # [linux]
-        - gcc
+  build:
+    - {{ compiler('c') }}
+  host:
+    - libpng
+    - libuuid
+    - mysql-connector-c
+    - openssl
+    - zlib
 
-    run:                                                            # [linux]
-        - libpng                                                    # [linux]
-        - mysql-connector-c                                         # [linux]
-        - zlib                                                      # [linux]
-        - openssl                                                   # [linux]
-        - libuuid                                                   # [linux]
-        - libgcc
+  run:
+    - libpng
+    - libuuid
+    - mysql-connector-c
+    - openssl
+    - zlib
 
 test:
-    commands:
-        # just check for existence, because the individual programs have no unified behavior
-        - which faToTwoBit
-        - faToTwoBit 2>&1 | grep faToTwoBit
+  commands:
+    # just check for existence, because the individual packages have no unified behavior
+    - which {{ program }}
 
 about:
-    home: "http://hgdownload.cse.ucsc.edu/admin/exe/"
-    license: "varies; see http://genome.ucsc.edu/license"
-    summary: "Convert DNA from fasta to 2bit format"
+  home: "http://hgdownload.cse.ucsc.edu/admin/exe/"
+  license: "varies; see http://genome.ucsc.edu/license"
+  summary: "Convert DNA from fasta to 2bit format"

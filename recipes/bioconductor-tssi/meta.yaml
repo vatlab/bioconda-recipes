@@ -1,42 +1,57 @@
+{% set version = "1.29.0" %}
+{% set name = "TSSi" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-tssi
-  version: 1.22.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: TSSi_1.22.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/TSSi_1.22.0.tar.gz
-    - https://bioarchive.galaxyproject.org/TSSi_1.22.0.tar.gz
-    - https://depot.galaxyproject.org/software/TSSi/TSSi_1.22.0_src_all.tar.gz
-  md5: 2de488ce7fa30a257e2c1b3b3f09a2a3
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: e73802f58fd8a5199b7f11ec187658f4
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+# Suggests: rtracklayer
 requirements:
-  build:
-    - 'bioconductor-biobase >=0.3.2'
-    - 'bioconductor-biocgenerics >=0.3.2'
-    - bioconductor-iranges
-    - bioconductor-s4vectors
+  host:
+    - 'bioconductor-biobase >=2.44.0,<2.45.0'
+    - 'bioconductor-biocgenerics >=0.30.0,<0.31.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
+    - 'bioconductor-s4vectors >=0.22.0,<0.23.0'
     - r-base
     - r-hmisc
     - r-minqa
     - r-plyr
   run:
-    - 'bioconductor-biobase >=0.3.2'
-    - 'bioconductor-biocgenerics >=0.3.2'
-    - bioconductor-iranges
-    - bioconductor-s4vectors
+    - 'bioconductor-biobase >=2.44.0,<2.45.0'
+    - 'bioconductor-biocgenerics >=0.30.0,<0.31.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
+    - 'bioconductor-s4vectors >=0.22.0,<0.23.0'
     - r-base
     - r-hmisc
     - r-minqa
     - r-plyr
+  build:
+    - {{ compiler('c') }}
+    - make
 test:
   commands:
-    - '$R -e "library(''TSSi'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/TSSi.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-3
-  summary: 'Identify and normalize transcription start sites in high-throughput sequencing
-    data.'
+  summary: 'Identify and normalize transcription start sites in high-throughput sequencing data.'
+extra:
+  identifiers:
+    - biotools:tssi
+    - doi:10.1093/bioinformatics/bts189
+  parent_recipe:
+    name: bioconductor-tssi
+    path: recipes/bioconductor-tssi
+    version: 1.26.0
+

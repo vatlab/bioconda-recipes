@@ -1,52 +1,57 @@
+{% set name = "pyprophet" %}
+{% set version = "2.1.3" %}
+{% set hash_type = "sha256" %}
+{% set hash_value = "f720f07b2375da170f99a110f6e01b27a11e7c0fa7f200b7871d54b21fbc2d29" %}
+
 package:
-  name: pyprophet
-  version: "0.22.0"
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
 
 source:
-  fn: pyprophet-0.22.0.tar.gz
-  url: https://pypi.python.org/packages/0b/b5/4afe0b5b6ebac3755c2d27a58aeac39d57168d5246a0d52f32752cc46c45/pyprophet-0.22.0.tar.gz
-  md5: 8e2e0445f161b69514cc9284e89305e4
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  '{{ hash_type }}': '{{ hash_value }}'
 
 build:
-  entry_points:
-
-    - pyprophet=pyprophet.main:main
-
   number: 0
-  skip: True # [py3k]
+  skip: True  # [py27]
+  entry_points:
+    - pyprophet=pyprophet.main:cli
+  script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
   build:
+    - {{ compiler('c') }}
+  host:
     - python
-    - setuptools
-    - numpy >=1.9.0
-    - pandas >=0.17
-    - scipy >=0.9.0
-    - numexpr >=2.1
-    - scikit-learn >=0.17
-    - matplotlib
-    - seaborn
-
+    - pip
+    - cython
+    - numpy >=1.9
   run:
     - python
-    - numpy >=1.9.0
+    - {{ pin_compatible("numpy") }}
+    - scipy
     - pandas >=0.17
-    - scipy >=0.9.0
     - numexpr >=2.1
     - scikit-learn >=0.17
     - matplotlib
     - seaborn
+    - xgboost
+    - hyperopt
+    - statsmodels >=0.8.0
+    - click
 
 test:
   imports:
     - pyprophet
-
   commands:
-
     - pyprophet --help
 
 about:
   home: http://github.com/uweschmitt/pyprophet
   license: BSD License
-  summary: 'Python reimplementation of mProphet peak scoring'
   license_family: BSD
+  summary: Python reimplementation of mProphet peak scoring
+extra:
+  container:
+    # Click requires the extended container
+    extended-base: true

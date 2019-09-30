@@ -1,30 +1,28 @@
-{% set name = "sniffles" %}
-{% set version = "1.0.6" %}
-{% set hash = "06beca2c0875ec607c68bd467a1a4bfc7a50d8f9a3d9ebcc282ad7b716dc5e0e" %}
+{% set version = "1.0.11" %}
+{% set sha256 = "c40fbf681587396bd9e19868276ef3c8470edea766cef14d06f13957b9ad187d" %}
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: sniffles
+  version: '{{version}}'
 
 source:
-  fn: {{ name|lower }}_{{ version }}.tar.gz
-  url: https://github.com/fritzsedlazeck/Sniffles/archive/v{{ version }}.tar.gz
-  sha256: {{ hash }}
+  url: https://github.com/fritzsedlazeck/Sniffles/archive/{{version}}.tar.gz
+  sha256: '{{sha256}}'
 
 build:
-  number: 0
+  number: 1
+  skip: true # [osx]
 
 requirements:
   build:
-    - gcc
+    - '{{ compiler("c") }}'
+    - '{{ compiler("cxx") }}'
     - cmake
+  host:
     - zlib
-    - bamtools >=2.3.0
     - tclap >=1.2.1
   run:
     - zlib
-    - libgcc
-    - bamtools >=2.3.0
     - tclap >=1.2.1
 
 test:
@@ -34,4 +32,7 @@ test:
 about:
   home: https://github.com/fritzsedlazeck/Sniffles
   license: MIT
-  summary: 'Sniffles is a structural variation caller using third generation sequencing (PacBio or Oxford Nanopore)'
+  license_file: LICENSE
+  license_family: MIT
+  summary: Sniffles is a structural variation caller using third generation sequencing
+    (PacBio or Oxford Nanopore)

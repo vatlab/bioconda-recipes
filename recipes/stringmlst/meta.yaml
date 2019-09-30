@@ -1,6 +1,5 @@
 {% set name = "stringmlst" %}
-{% set version = "0.4.1" %}
-{% set md5 = "5f6cb77855c93b9a5a7d265eba8e1225" %}
+{% set version = "0.6.2" %}
 
 package:
   name: {{ name|lower }}
@@ -8,15 +7,14 @@ package:
 
 source:
   url: https://github.com/jordanlab/stringMLST/archive/{{ version }}.tar.gz
-  fn: {{ name|lower }}_{{ version }}.tar.gz
-  md5: {{ md5 }}
+  sha256: b408b1b332f540fdd15e136d91e5a831e5c676dccf102ec2d67199b7931d9163
 
 build:
   number: 0
-  skip: True  # [py27]    
+  skip: True  # [py27]
 
 requirements:
-  build:
+  host:
     - python
     - setuptools
     - pyfaidx
@@ -32,7 +30,7 @@ requirements:
 
 test:
   commands:
-    - stringMLST.py  -v
+    - stringMLST.py -v
 
 about:
   home: https://github.com/jordanlab/stringMLST

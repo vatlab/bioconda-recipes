@@ -1,18 +1,17 @@
 package:
   name: vcf2db
-  version: '2017.09.14'
+  version: '2018.10.26'
 
 build:
   number: 0
   skip: True # [not py27]
- 
+
 source:
-  fn: vcf2db-b5251d9.tar.gz
-  url: https://github.com/quinlan-lab/vcf2db/archive/b5251d9.tar.gz
-  sha256: 6377b1fcc55b1cbf438e69c7e18092ee1c4cfd0a516ffed582924bf11fa38663
+  url: https://github.com/quinlan-lab/vcf2db/archive/03a31a6.tar.gz
+  sha256: e85c41dceb031c5c2348ddb71bc45425a5eb9d3fd4513aa19e54223695eed007
 
 requirements:
-  build:
+  host:
     - python
     - perl
     - nomkl # [unix]

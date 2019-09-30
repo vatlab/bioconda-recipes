@@ -1,35 +1,47 @@
+{% set version = "1.14.0" %}
+{% set name = "traseR" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-traser
-  version: 1.6.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: traseR_1.6.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/traseR_1.6.0.tar.gz
-    - https://bioarchive.galaxyproject.org/traseR_1.6.0.tar.gz
-    - https://depot.galaxyproject.org/software/traseR/traseR_1.6.0_src_all.tar.gz
-  md5: 736ed1e0061e31f181a4bc800440241c
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 8e936f90626d084548bd4e448de29c8a
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: BiocStyle,RUnit, BiocGenerics
 requirements:
-  build:
-    - bioconductor-bsgenome.hsapiens.ucsc.hg19
-    - bioconductor-genomicranges
-    - bioconductor-iranges
+  host:
+    - 'bioconductor-bsgenome.hsapiens.ucsc.hg19 >=1.4.0,<1.5.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
     - r-base
   run:
-    - bioconductor-bsgenome.hsapiens.ucsc.hg19
-    - bioconductor-genomicranges
-    - bioconductor-iranges
+    - 'bioconductor-bsgenome.hsapiens.ucsc.hg19 >=1.4.0,<1.5.0'
+    - 'bioconductor-genomicranges >=1.36.0,<1.37.0'
+    - 'bioconductor-iranges >=2.18.0,<2.19.0'
     - r-base
 test:
   commands:
-    - '$R -e "library(''traseR'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/traseR.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL
-  summary: 'traseR performs GWAS trait-associated SNP enrichment analyses in genomic
-    intervals using different hypothesis testing approaches, also provides various
-    functionalities to explore and visualize the results.'
+  summary: 'traseR performs GWAS trait-associated SNP enrichment analyses in genomic intervals using different hypothesis testing approaches, also provides various functionalities to explore and visualize the results.'
+extra:
+  identifiers:
+    - biotools:traser
+    - doi:10.1093/bioinformatics/btv741
+  parent_recipe:
+    name: bioconductor-traser
+    path: recipes/bioconductor-traser
+    version: 1.10.0
+

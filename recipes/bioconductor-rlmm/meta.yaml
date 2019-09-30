@@ -1,20 +1,25 @@
+{% set version = "1.46.0" %}
+{% set name = "RLMM" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-rlmm
-  version: 1.38.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: RLMM_1.38.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/RLMM_1.38.0.tar.gz
-    - https://bioarchive.galaxyproject.org/RLMM_1.38.0.tar.gz
-    - https://depot.galaxyproject.org/software/RLMM/RLMM_1.38.0_src_all.tar.gz
-  md5: af5d1ecdc28a9d4d1563a298d6673fa3
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: a3796e7da8e9a0dc62085026207c22ca
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# SystemRequirements: Internal files Xba.CQV, Xba.regions (or other regions file)
 requirements:
-  build:
+  host:
     - r-base
     - r-mass
   run:
@@ -22,15 +27,17 @@ requirements:
     - r-mass
 test:
   commands:
-    - '$R -e "library(''RLMM'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/RLMM.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: 'LGPL (>= 2)'
-  summary: 'A classification algorithm, based on a multi-chip, multi-SNP approach
-    for Affymetrix SNP arrays. Using a large training sample where the genotype labels
-    are known, this aglorithm will obtain more accurate classification results on
-    new data. RLMM is based on a robust, linear model and uses the Mahalanobis distance
-    for classification. The chip-to-chip non-biological variation is removed through
-    normalization. This model-based algorithm captures the similarities across genotype
-    groups and probes, as well as thousands other SNPs for accurate classification.
-    NOTE: 100K-Xba only at for now.'
+  summary: 'A classification algorithm, based on a multi-chip, multi-SNP approach for Affymetrix SNP arrays. Using a large training sample where the genotype labels are known, this aglorithm will obtain more accurate classification results on new data. RLMM is based on a robust, linear model and uses the Mahalanobis distance for classification. The chip-to-chip non-biological variation is removed through normalization. This model-based algorithm captures the similarities across genotype groups and probes, as well as thousands other SNPs for accurate classification. NOTE: 100K-Xba only at for now.'
+extra:
+  identifiers:
+    - biotools:rlmm
+    - doi:10.1093/bioinformatics/bti741
+  parent_recipe:
+    name: bioconductor-rlmm
+    path: recipes/bioconductor-rlmm
+    version: 1.42.0
+

@@ -1,33 +1,44 @@
+{% set version = "1.20.0" %}
+{% set name = "sangerseqR" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-sangerseqr
-  version: 1.12.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: sangerseqR_1.12.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/sangerseqR_1.12.0.tar.gz
-    - https://bioarchive.galaxyproject.org/sangerseqR_1.12.0.tar.gz
-    - https://depot.galaxyproject.org/software/sangerseqR/sangerseqR_1.12.0_src_all.tar.gz
-  md5: d526e7a5fbc4694c861b34b583efbd35
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 31264d633b121298f642ed7e79e366d1
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
+  noarch: generic
+# Suggests: BiocStyle, knitr, RUnit, BiocGenerics
 requirements:
-  build:
-    - bioconductor-biostrings
+  host:
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
     - r-base
     - r-shiny
   run:
-    - bioconductor-biostrings
+    - 'bioconductor-biostrings >=2.52.0,<2.53.0'
     - r-base
     - r-shiny
 test:
   commands:
-    - '$R -e "library(''sangerseqR'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/sangerseqR.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: GPL-2
-  summary: 'This package contains several tools for analyzing Sanger Sequencing data
-    files in R, including reading .scf and .ab1 files, making basecalls and plotting
-    chromatograms.'
+  summary: 'This package contains several tools for analyzing Sanger Sequencing data files in R, including reading .scf and .ab1 files, making basecalls and plotting chromatograms.'
+extra:
+  identifiers:
+    - biotools:sangerseqr
+  parent_recipe:
+    name: bioconductor-sangerseqr
+    path: recipes/bioconductor-sangerseqr
+    version: 1.16.0
+

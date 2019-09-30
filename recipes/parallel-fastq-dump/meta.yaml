@@ -1,25 +1,24 @@
-{% set version = "0.5.4" %}
-{% set sha256 = "7158e63ecd2907d4027cd4e0371c53cf255394f9698496640b94883334b77d9f" %}
+{% set version = "0.6.5" %}
+{% set sha256 = "f1361a09089945b286b48566bb8282d67b8ed69e6b87507253c86968b85baa39" %}
 
 package:
   name: parallel-fastq-dump
   version: {{ version }}
 
 source:
-  fn: {{ version }}.tar.gz
   url: https://github.com/rvalieris/parallel-fastq-dump/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  skip: True # [py27]
+  noarch: python
   number: 0
 
 requirements:
-  build:
-    - python
+  host:
+    - python >=3
 
   run:
-    - python
+    - python >=3
     - sra-tools
 
 test:

@@ -1,28 +1,43 @@
+{% set version = "1.28.0" %}
+{% set name = "ASEB" %}
+{% set bioc = "3.9" %}
+
 package:
-  name: bioconductor-aseb
-  version: 1.20.0
+  name: 'bioconductor-{{ name|lower }}'
+  version: '{{ version }}'
 source:
-  fn: ASEB_1.20.0.tar.gz
   url:
-    - http://bioconductor.org/packages/3.5/bioc/src/contrib/ASEB_1.20.0.tar.gz
-    - https://bioarchive.galaxyproject.org/ASEB_1.20.0.tar.gz
-    - https://depot.galaxyproject.org/software/ASEB/ASEB_1.20.0_src_all.tar.gz
-  md5: 24c4f3e438eecc9d9b7904a529f7096f
+    - 'https://bioconductor.org/packages/{{ bioc }}/bioc/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://bioarchive.galaxyproject.org/{{ name }}_{{ version }}.tar.gz'
+    - 'https://depot.galaxyproject.org/software/bioconductor-{{ name|lower }}/bioconductor-{{ name|lower }}_{{ version }}_src_all.tar.gz'
+  md5: 72879a9c7bf18ea45b4cd0fd9855fe3c
 build:
-  number: 0
+  number: 1
   rpaths:
     - lib/R/lib/
     - lib/
 requirements:
-  build:
+  host:
     - r-base
   run:
     - r-base
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make
 test:
   commands:
-    - '$R -e "library(''ASEB'')"'
+    - '$R -e "library(''{{ name }}'')"'
 about:
-  home: http://bioconductor.org/packages/3.5/bioc/html/ASEB.html
+  home: 'https://bioconductor.org/packages/{{ bioc }}/bioc/html/{{ name }}.html'
   license: 'GPL (>= 3)'
-  summary: 'ASEB is an R package to predict lysine sites that can be acetylated by
-    a specific KAT-family.'
+  summary: 'ASEB is an R package to predict lysine sites that can be acetylated by a specific KAT-family.'
+extra:
+  identifiers:
+    - biotools:aseb
+    - doi:10.1093/nar/gks437
+  parent_recipe:
+    name: bioconductor-aseb
+    path: recipes/bioconductor-aseb
+    version: 1.24.0
+
